@@ -8,7 +8,7 @@ import { CatsService } from './cats.service';
   imports: [
     MongooseModule.forFeature([
       {
-        name: 'Cat',
+        name: 'categorys',
         schema: CatSchema,
       },
     ]),

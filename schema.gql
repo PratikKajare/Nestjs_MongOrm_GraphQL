@@ -3,23 +3,38 @@
 # ------------------------------------------------------
 
 type CatType {
-  id: ID!
+  id: ID
   name: String!
-  age: Int!
-  breed: String!
+  icon: String
+  description: String
+  status: String
+  updatedAt: String
+  createdAt: String
 }
 
 type Query {
   hello: String!
   cats: [CatType!]!
+  catByID(id: String!): CatType!
+  status(filters: ListPersonInput): [CatType!]!
+}
+
+input ListPersonInput {
+  status: String!
 }
 
 type Mutation {
-  createCat(input: CatInput!): [CatType!]!
+  createCat(inputg: CatInput!): CatType!
+  deleteCAt(id: String!): CatType!
+  updateMe(id: String!, input: CatInput!): CatType!
 }
 
 input CatInput {
+  id: ID
   name: String!
-  age: Int!
-  breed: String!
+  icon: String
+  description: String
+  status: String
+  updatedAt: String
+  createdAt: String
 }

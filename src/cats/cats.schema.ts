@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
 
 export const CatSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  breed: String,
+  id: String!,
+  name: String!,
+  icon: String!,
+  description: String!,
+  status: String!,
+  updatedAt: String!,
+  createdAt: String!,
 });
