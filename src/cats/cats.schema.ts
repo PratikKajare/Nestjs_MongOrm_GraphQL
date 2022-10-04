@@ -1,11 +1,7 @@
-import mongoose from 'mongoose';
+import { SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-export const CatSchema = new mongoose.Schema({
-  id: String!,
-  name: String!,
-  icon: String!,
-  description: String!,
-  status: String!,
-  updatedAt: String!,
-  createdAt: String!,
-});
+import { CatType } from './dto/create-cat.dto';
+
+export type CatDocument = CatType & Document;
+export const CatSchema = SchemaFactory.createForClass(CatType);

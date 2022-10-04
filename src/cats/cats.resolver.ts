@@ -32,6 +32,7 @@ export class CatsResolver {
   async deleteCAt(@Args('id') id: string) {
     return await this.catsService.deletePost(id);
   }
+
   @Mutation((returns) => CatType)
   async updateMe(@Args('id') id: string, @Args('input') input: CatInput) {
     return await this.catsService.updatePost(id, input);

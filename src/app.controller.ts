@@ -9,4 +9,8 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+  @Get('graphql')
+  getHello2(): string {
+    return this.appService.getHello();
+  }
 }

@@ -1,15 +1,54 @@
-import { Model, Types } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { isValidObjectId, Model } from 'mongoose';
+import { Injectable, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cat } from './interfaces/cat.interface';
-import { CatInput, ListPersonInput } from './inputs/cat.input';
+import { ListPersonInput } from './inputs/cat.input';
 
 import { v4 as uuid } from 'uuid';
 import { CatType } from './dto/create-cat.dto';
+import { SearchServiceInterface } from 'src/search/interface/search.service.interface';
+import { ProductSearchObject } from 'src/search/object/product.search.object';
+import { json } from 'stream/consumers';
+import { toArray } from 'rxjs';
 
 @Injectable()
 export class CatsService {
-  constructor(@InjectModel('categorys') private catModel: Model<Cat>) {}
+  constructor(
+    @InjectModel('categorys') private catModel: Model<Cat>,
+    @Inject('SearchServiceInterface')
+    private readonly searchService: SearchServiceInterface<any>,
+  ) {}
+  public async search(q: any): Promise<any> {
+    const befor = await this.catModel.findOne({ q });
+    // const data = await ProductSearchObject.searchObject(isValidObjectId(befor));
+    return await this.searchService.searchIndex(befor);
+  }
+
+  public async create(createCatDto: CatType): Promise<any> {
+    const { name, icon, description, status, updatedAt, createdAt } =
+      createCatDto;
+    console.log(name, icon, description, status, updatedAt, createdAt);
+
+    const bulkData = new this.catModel({
+      id: uuid(),
+      name,
+      icon,
+      description,
+      status,
+      updatedAt,
+      createdAt,
+    });
+
+    await bulkData.save();
+    console.log(bulkData);
+    await this.searchService.insertIndex(bulkData);
+
+    return bulkData;
+  }
+
+  getPratik(): string {
+    return 'Pratik Kajare!';
+  }
 
   async getcat(id: string): Promise<Cat> {
     return await this.catModel.findOne({ id });
