@@ -1,6 +1,8 @@
+import { CatType } from 'src/cats/dto/create-cat.dto';
+
 export interface CatSearchServiceInterface<T> {
   search(q: T): Promise<any>;
-  insertIndex(bulkData: T): Promise<T>;
+  insertIndex(bulkData: CatType): Promise<T>;
   // updateIndex(updateData: T): Promise<T>;
 
   searchIndex(searchData: T): Promise<T>;

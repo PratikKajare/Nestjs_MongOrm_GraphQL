@@ -1,3 +1,4 @@
+import { CatType } from 'src/cats/dto/create-cat.dto';
 import { productIndex } from '../constant/product.elastic';
 
 export class ElasticSearchBody {
@@ -20,18 +21,12 @@ export class ProductSearchObject {
 
   public static elasticSearchBody(q: any): ElasticSearchBody {
     const query = {
-      match: {
-        query: q,
-        fields: [
-          'name',
-          'description',
-          'icon',
-          'status',
-          'updatedAt',
-          'createdAt',
-        ],
+      query: {
+        match: {
+          url: q,
+        },
       },
     };
-    return new ElasticSearchBody(10, 0, query);
+    return new ElasticSearchBody(55, 0, query);
   }
 }

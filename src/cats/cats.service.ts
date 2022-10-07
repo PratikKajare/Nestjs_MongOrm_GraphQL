@@ -1,4 +1,4 @@
-import { isValidObjectId, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cat } from './interfaces/cat.interface';
@@ -8,8 +8,7 @@ import { v4 as uuid } from 'uuid';
 import { CatType } from './dto/create-cat.dto';
 import { SearchServiceInterface } from 'src/search/interface/search.service.interface';
 import { ProductSearchObject } from 'src/search/object/product.search.object';
-import { json } from 'stream/consumers';
-import { toArray } from 'rxjs';
+import { QueryParamDto } from './cat.controller';
 
 @Injectable()
 export class CatsService {
@@ -18,32 +17,35 @@ export class CatsService {
     @Inject('SearchServiceInterface')
     private readonly searchService: SearchServiceInterface<any>,
   ) {}
-  public async search(q: any): Promise<any> {
-    const befor = await this.catModel.findOne({ q });
-    // const data = await ProductSearchObject.searchObject(isValidObjectId(befor));
-    return await this.searchService.searchIndex(befor);
+  public async search(q: QueryParamDto): Promise<any> {
+    // const data = await this.catModel.find(q);
+    // const data = ProductSearchObject.searchObject(q);
+    // console.log(data);
+
+    // console.log(befor);
+
+    return await this.searchService.searchIndex(q);
   }
 
   public async create(createCatDto: CatType): Promise<any> {
     const { name, icon, description, status, updatedAt, createdAt } =
       createCatDto;
-    console.log(name, icon, description, status, updatedAt, createdAt);
+    // console.log(name, icon, description, status, updatedAt, createdAt);
 
     const bulkData = new this.catModel({
-      id: uuid(),
+      // id: uuid(),
       name,
       icon,
       description,
       status,
-      updatedAt,
-      createdAt,
     });
 
-    await bulkData.save();
+    // await bulkData.save();
     console.log(bulkData);
+
     await this.searchService.insertIndex(bulkData);
 
-    return bulkData;
+    // return bulkData;
   }
 
   getPratik(): string {

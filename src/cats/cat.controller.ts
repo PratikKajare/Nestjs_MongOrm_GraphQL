@@ -1,17 +1,19 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import { KeyObject } from 'crypto';
 import { CatsService } from './cats.service';
 import { CatType } from './dto/create-cat.dto';
 
-@Controller('graphql')
+@Controller('esService')
 export class CatController {
   constructor(private readonly catsService: CatsService) {}
-  @Get('/search')
-  public async search(@Query() q: any): Promise<any> {
-    return await this.catsService.search(q);
+  @Get('/_search')
+  public async search(@Query() query: any): Promise<any> {
+    return await this.catsService.search(query);
+
     // return await this.CatsService.search(query.q);
   }
 
-  @Post('/create')
+  @Put('/_bulk')
   async create(@Body() createCatDto: CatType): Promise<any> {
     return await this.catsService.create(createCatDto);
   }
@@ -19,4 +21,8 @@ export class CatController {
   getPratik(): string {
     return this.catsService.getPratik();
   }
+}
+
+export class QueryParamDto {
+  name: string;
 }
