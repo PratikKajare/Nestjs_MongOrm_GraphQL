@@ -7,7 +7,7 @@ export interface SearchServiceInterface<T> {
 
   searchIndex(searchData: T): Promise<T>;
 
-  // deleteIndex(indexData: T): Promise<T>;
+  deleteIndex(indexData: T): Promise<T>;
 
   // deleteDocument(indexData: T): Promise<T>;
 }

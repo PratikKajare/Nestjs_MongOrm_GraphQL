@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { SearchService } from './search.service';
-import { SearchServiceInterface } from './interface/search.service.interface';
-
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
 @Module({
