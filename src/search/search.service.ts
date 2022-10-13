@@ -7,23 +7,20 @@ import { PostSearchResult } from './interface/searchResult';
 import { PostSearchBody } from './interface/searchBody';
 
 @Injectable()
-export class SearchService
-  extends ElasticsearchService
-  implements SearchServiceInterface<any>
-{
-  // index = 'categorys';
+export class SearchService implements SearchServiceInterface<any> {
   constructor(private eService: ElasticsearchService) {
-    super(ConfigSearch.searchConfig(process.env.ELASTIC_SEARCH_URL));
+    // super(ConfigSearch.searchConfig(process.env.ELASTIC_SEARCH_URL));
   }
   public async searchIndex(searchData: any): Promise<any> {
-    return await this.search({
-      index: productIndex._index,
-      body: {
-        query: {
-          match: searchData,
+    return await this.eService
+      .search({
+        index: productIndex._index,
+        body: {
+          query: {
+            match: searchData,
+          },
         },
-      },
-    })
+      })
       .then((res) => {
         return res.hits.hits;
       })
@@ -52,25 +49,25 @@ export class SearchService
   //     });
   // }
 
-  public async insertIndex(bulkData: any): Promise<any> {
-    return this.index<PostSearchBody>({
-      index: productIndex._index,
-      body: {
-        id: bulkData.id,
-        status: bulkData.status,
-        name: bulkData.name,
-        icon: bulkData.icon,
-        description: bulkData.description,
-      },
-    })
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => {
-        console.log(err);
-        throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-      });
-  }
+  // public async insertIndex(bulkData: any): Promise<any> {
+  //   return this.index<PostSearchBody>({
+  //     index: productIndex._index,
+  //     body: {
+  //       id: bulkData.id,
+  //       status: bulkData.status,
+  //       name: bulkData.name,
+  //       icon: bulkData.icon,
+  //       description: bulkData.description,
+  //     },
+  //   })
+  //     .then((res) => {
+  //       return res;
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+  //     });
+  // }
   //   async insertIndex(bulkData: any) {
   //     // const checkIndex = await this.eService.indices.exists({ index: productIndex._index});
 
@@ -110,14 +107,14 @@ export class SearchService
   //       });
   //   }
 
-  public async deleteIndex(indexData: any): Promise<any> {
-    return await this.indices
-      .delete(indexData)
-      .then((res) => res)
-      .catch((err) => {
-        throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-      });
-  }
+  // public async deleteIndex(indexData: any): Promise<any> {
+  //   return await this.indices
+  //     .delete(indexData)
+  //     .then((res) => res)
+  //     .catch((err) => {
+  //       throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
+  //     });
+  // }
 
   //   public async deleteDocument(indexData: any): Promise<any> {
   //     return await this.delete(indexData).then(res => res)

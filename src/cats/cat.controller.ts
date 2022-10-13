@@ -12,17 +12,17 @@ export class CatController {
     // return await this.CatsService.search(query.q);
   }
 
-  @Put('/_create')
-  async create(@Body() createCatDto: CatType): Promise<any> {
-    return await this.catsService.create(createCatDto);
-  }
+  // @Put('/_create')
+  // async create(@Body() createCatDto: CatType): Promise<any> {
+  //   return await this.catsService.create(createCatDto);
+  // }
 
-  @Delete('/_delete')
-  public async deletePost(@Query() query: any): Promise<any> {
-    return await this.catsService.deletePost(query);
+  // @Delete('/_delete')
+  // public async deletePost(@Query() query: any): Promise<any> {
+  //   return await this.catsService.deletePost(query);
 
-    // return await this.CatsService.search(query.q);
-  }
+  //   // return await this.CatsService.search(query.q);
+  // }
   @Get()
   getPratik(): string {
     return this.catsService.getPratik();

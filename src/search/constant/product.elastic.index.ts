@@ -11,10 +11,10 @@ export class ProductElasticIndex {
     private readonly searchService: SearchServiceInterface<any>,
   ) {}
 
-  public async insertProductDocument(categorys: CatType): Promise<any> {
-    const data = this.productDocument(categorys);
-    return await this.searchService.insertIndex(data);
-  }
+  // public async insertProductDocument(categorys: CatType): Promise<any> {
+  //   const data = this.productDocument(categorys);
+  //   return await this.searchService.insertIndex(data);
+  // }
 
   // public async updateProductDocument(product: CatType): Promise<any> {
   //   const data = this.productDocument(product);

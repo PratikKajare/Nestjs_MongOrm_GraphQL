@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SearchService } from './search.service';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -17,17 +18,18 @@ import { ElasticsearchModule } from '@nestjs/elasticsearch';
           password: 'KfTdC=4qgizEX6r68vuA',
         },
       }),
+      inject: [ConfigService],
     }),
   ],
 
-  providers: [
-    {
-      provide: 'SearchServiceInterface',
-      useClass: SearchService,
-    },
-    SearchService,
-  ],
+  // providers: [
+  //   //   {
+  //   //     provide: 'SearchServiceInterface',
+  //   //     useClass: SearchService,
+  //   //   },
+  //   SearchService,
+  // ],
   controllers: [],
-  exports: [SearchModule, SearchService],
+  exports: [SearchModule, ElasticsearchModule],
 })
 export class SearchModule {}

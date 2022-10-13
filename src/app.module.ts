@@ -9,6 +9,10 @@ import configuration from './config/configuration';
 import { ConfigurationModule } from './config/config.module';
 import { ConfigModule } from '@nestjs/config';
 import { SearchModule } from './search/search.module';
+import {
+  ElasticsearchModule,
+  ElasticsearchService,
+} from '@nestjs/elasticsearch';
 // import { ormConfig } from './search/constant/ormconfig';
 @Module({
   imports: [
@@ -24,7 +28,7 @@ import { SearchModule } from './search/search.module';
       autoSchemaFile: 'schema.gql',
     }),
     ConfigurationModule,
-    SearchModule,
+    ElasticsearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],

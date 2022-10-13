@@ -9,13 +9,13 @@ import { CatType } from './dto/create-cat.dto';
 import { SearchServiceInterface } from 'src/search/interface/search.service.interface';
 // import { ProductSearchObject } from 'src/search/object/product.search.object';
 import { QueryParamDto } from './cat.controller';
+import { SearchService } from 'src/search/search.service';
 
 @Injectable()
 export class CatsService {
   constructor(
     @InjectModel('categorys') private catModel: Model<Cat>,
-    @Inject('SearchServiceInterface')
-    private readonly searchService: SearchServiceInterface<any>,
+    private searchService: SearchService,
   ) {}
 
   public async search(q: QueryParamDto): Promise<any> {
@@ -39,7 +39,7 @@ export class CatsService {
     await bulkData.save();
     console.log(bulkData);
 
-    await this.searchService.insertIndex(bulkData);
+    // await this.searchService.insertIndex(bulkData);
     // return bulkData;
   }
 
@@ -70,13 +70,13 @@ export class CatsService {
       createdAt,
     });
     const bulkData = await categorys.save();
-    await this.searchService.insertIndex(bulkData); //elastic
+    // await this.searchService.insertIndex(bulkData); //elastic
     return bulkData;
   }
 
   async deletePost(id: string): Promise<Cat> {
-    return await this.searchService.deleteIndex({ id }); //elastic
-    // return await this.catModel.findOneAndDelete({ id });
+    // return await this.searchService.deleteIndex({ id }); //elastic
+    return await this.catModel.findOneAndDelete({ id });
   }
 
   async updatePost(id: String, createCatDto: CatType): Promise<Cat> {

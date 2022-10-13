@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MongooseModule, Schema } from '@nestjs/mongoose';
 import { SearchService } from 'src/search/search.service';
 import { CatController } from './cat.controller';
@@ -16,12 +17,14 @@ import { CatsService } from './cats.service';
     ]),
   ],
   providers: [
-    {
-      provide: 'SearchServiceInterface',
-      useClass: SearchService,
-    },
+    // {
+    //   provide: 'SearchServiceInterface',
+    //   useClass: SearchService,
+    // },
     CatsResolver,
     CatsService,
+    SearchService,
+    ElasticsearchService,
   ],
   controllers: [CatController],
 })
